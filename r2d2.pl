@@ -1,3 +1,5 @@
+#!/usr/bin/env perl
+
 use Mojolicious::Lite;
 
 my $audio_cmd = 'mpg123';
