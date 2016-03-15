@@ -2,7 +2,7 @@
 
 use Mojolicious::Lite;
 
-my $audio_cmd = 'mpg123';
+my $audio_cmd = 'mpg123 -q';
 my $audio_path = './mp3/';
 
 my @sound_table;
@@ -21,7 +21,7 @@ get '/:cmd' => sub {
     my $i = $c->param('i');
 
     if ($cmd eq 's') {
-        `$audio_cmd $audio_path$sound_table[$i]`;
+        `$audio_cmd $audio_path$sound_table[$i] >/dev/null`;
     }
 
     $c->stash(sound_table => \@sound_table);
