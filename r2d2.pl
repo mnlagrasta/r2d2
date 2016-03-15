@@ -21,7 +21,7 @@ get '/:cmd' => sub {
     my $i = $c->param('i');
 
     if ($cmd eq 's') {
-        `$audio_cmd $audio_path$sound_table[$i] >/dev/null`;
+        `$audio_cmd $audio_path$sound_table[$i] >/dev/null &`;
     }
 
     $c->stash(sound_table => \@sound_table);
@@ -38,6 +38,7 @@ sub get_file_list {
     closedir $dh;
 }
 
+`$audio_cmd $audio_path$sound_table[0] >/dev/null &`;
 app->start;
 
 __DATA__
@@ -46,7 +47,7 @@ __DATA__
 % my $a=0;
 % my $b=0;
 <table><tr>
-% for my $sound (@$sound_table) {
+% for my $sound (sort @$sound_table) {
   <td><a href="/s?i=<%= $a %>"><button><%= $sound %></button></a></td>
   % if ($b++ == 2) {
       </tr><tr>
